@@ -30,6 +30,16 @@
             "quit",
             "go away"
           ]
+        },
+        {
+          "name": "StartIntent",
+          "samples": [
+            "start",
+            "start a match",
+            "new game",
+            "new match",
+            "start game"
+          ]
         }
       ]
     }
