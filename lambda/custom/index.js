@@ -2,20 +2,28 @@
 /* eslint-disable  no-console */
 
 const Alexa = require('ask-sdk-core');
-import { Player } from './shipshape';
+const { Player, syncDb } = require('./shipshape');
 
 const LaunchRequestHandler = {
   canHandle(handlerInput) {
     return handlerInput.requestEnvelope.request.type === 'LaunchRequest';
   },
   async handle(handlerInput) {
+    console.log('Sync DB');
+    await syncDb();
+
+    console.log('Launch');
     let [player, playerCreated] = await Player.findOrCreate({
         where: {
             alexaUid: handlerInput.requestEnvelope.session.user.userId
         }
     }).spread((player, playerCreated) => [player, playerCreated]);
 
+    console.log('Player get.');
+    console.log(playerCreated);
+
     if (playerCreated) {
+      console.log('Returning response');
       return handlerInput.responseBuilder
         .speak(`Welcome to ShipShape! I see it's your first time playing. You can say "start a new game" to begin.`)
         .reprompt(`Say "start a new game" to begin.`)
@@ -23,6 +31,7 @@ const LaunchRequestHandler = {
     }
 
     let match = await player.getActiveMatch();
+    console.log('Match get');
 
     if (match === null) {
       return handlerInput.responseBuilder
@@ -32,6 +41,7 @@ const LaunchRequestHandler = {
     }
 
     let unplaced = await match.getUnplacedShips(false);
+    unplaced = Object.keys(unplaced).map(key => [key, unplaced[key]]);
     if (unplaced.length !== 0) {
       return handlerInput.responseBuilder
         .speak(`Welcome to ShipShape! You have unplaced ships. Where would you like to place your ${unplaced[0].name}? It's ${unplaced[0].length} squares long.`)
@@ -43,7 +53,7 @@ const LaunchRequestHandler = {
       .speak(`Welcome to ShipShape! It's your move!`)
       .reprompt(`It's your move!`)
       .getResponse();
-  },
+  }
 };
 
 const HelpIntentHandler = {

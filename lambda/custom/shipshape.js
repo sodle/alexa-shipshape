@@ -1,10 +1,9 @@
-import Sequelize, { Op, DataTypes } from 'sequelize';
+const {Sequelize, Op, DataTypes } = require('sequelize');
 
 const sequelize = new Sequelize('shipshape', process.env.SEQUELIZE_USER, process.env.SEQUELIZE_PASS, {
     dialect: 'postgres',
     host: process.env.SEQUELIZE_HOST,
-    operatorsAliases: Op,
-    logging: false
+    operatorsAliases: Op
 });
 
 const getSquareIdx = (x, y) => y * 10 + x;
@@ -17,33 +16,21 @@ const Player = sequelize.define('player', {
 });
 Player.prototype.getAllMatches = function () {
     return Match.findAll({
-        include: [
-            {
-                model: Player,
-                where: {
-                    id: {
-                        [Op.eq]: Sequelize.col('player.id')
-                    }
-                }
+        where: {
+            playerId: {
+                [Op.eq]: this.id
             }
-        ]
+        }
     });
 };
 Player.prototype.getActiveMatch = function () {
     return Match.findOne({
-        include: [
-            {
-                model: Player,
-                where: {
-                    id: {
-                        [Op.eq]: Sequelize.col('player.id')
-                    }
-                }
-            }
-        ],
         where: {
             endTime: {
                 [Op.eq]: null
+            },
+            playerId: {
+                [Op.eq]: this.id
             }
         }
     });
@@ -57,19 +44,12 @@ Player.prototype.getOrStartMatch = async function (opponentIfNew) {
 }
 Player.prototype.getMatchHistory = function () {
     return Match.findAll({
-        include: [
-            {
-                model: Player,
-                where: {
-                    id: {
-                        [Op.eq]: Sequelize.col('player.id')
-                    }
-                }
-            }
-        ],
         where: {
             endTime: {
                 [Op.not]: null
+            },
+            playerId: {
+                [Op.eq]: this.id
             }
         }
     });
@@ -114,38 +94,24 @@ const Match = sequelize.define('match', {
 Match.belongsTo(Player);
 Match.prototype.getPlayerShips = function(ai) {
     return Ship.findAll({
-        include: [
-            {
-                model: Match,
-                where: {
-                    id: {
-                        [Op.eq]: Sequelize.col('match.id')
-                    }
-                }
-            }
-        ],
         where: {
             ai: {
                 [Op.eq]: ai
+            },
+            matchId: {
+                [Op.eq]: this.id
             }
         }
     });
 };
 Match.prototype.listAiMoves = function() {
     return Move.findAll({
-        include: [
-            {
-                model: Match,
-                where: {
-                    id: {
-                        [Op.eq]: Sequelize.col('match.id')
-                    }
-                }
-            }
-        ],
         where: {
             ai: {
                 [Op.eq]: true
+            },
+            matchId: {
+                [Op.eq]: this.id
             }
         },
         order: [
@@ -355,4 +321,4 @@ const syncDb = () => new Promise((resolve) => {
     });
 });
 
-export { Player, Match, Ship, syncDb, getSquareIdx };
+module.exports = { Player, Match, Ship, syncDb, getSquareIdx };
