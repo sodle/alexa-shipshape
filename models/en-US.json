@@ -9,19 +9,26 @@
         {
           "name": "AMAZON.CancelIntent",
           "samples": [
-
+            "never mind",
+            "cancel"
           ]
         },
         {
           "name": "AMAZON.HelpIntent",
           "samples": [
-
+            "help",
+            "for help",
+            "help me",
+            "i need help",
+            "i'm confused"
           ]
         },
         {
           "name": "AMAZON.StopIntent",
           "samples": [
-
+            "stop",
+            "quit",
+            "go away"
           ]
         }
       ]
