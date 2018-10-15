@@ -1,6 +1,6 @@
 {
   "deploy_settings": {
-    "default": {
+    "sjodle": {
       "skill_id": "amzn1.ask.skill.64f2253d-6519-4a9f-a6b8-30f3b7d135c4",
       "was_cloned": false,
       "merge": {
@@ -31,7 +31,7 @@
             "alexaUsage": [
               "custom/default"
             ],
-            "revisionId": "ab7af67b-2dae-4cc4-9fd4-552dab5132e7"
+            "revisionId": "519f39bd-9123-499c-b59f-1f39838947a5"
           }
         ]
       }
