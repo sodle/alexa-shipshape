@@ -16,8 +16,24 @@
       },
       "resources": {
         "manifest": {
-          "eTag": "d18c3122d8af7fce59c7ed1c00504623"
-        }
+          "eTag": "208911ae07a47630c1140758acd29c4f"
+        },
+        "interactionModel": {
+          "en-US": {
+            "eTag": "838ba738882c540057d0e95ba4a36abb"
+          }
+        },
+        "lambda": [
+          {
+            "arn": "arn:aws:lambda:us-east-1:304255602851:function:ask-custom-alexa-shipshape-default",
+            "functionName": "arn:aws:lambda:us-east-1:304255602851:function:ask-custom-alexa-shipshape-default",
+            "awsRegion": "us-east-1",
+            "alexaUsage": [
+              "custom/default"
+            ],
+            "revisionId": "ab7af67b-2dae-4cc4-9fd4-552dab5132e7"
+          }
+        ]
       }
     }
   }

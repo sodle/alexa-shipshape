@@ -9,7 +9,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "ask-sdk-core": "^2.0.0",
-    "ask-sdk-model": "^1.0.0"
+    "ask-sdk": "^2.0.3",
+    "pg": "^7.5.0",
+    "pg-hstore": "^2.3.2",
+    "sequelize": "^4.39.0"
   }
 }
