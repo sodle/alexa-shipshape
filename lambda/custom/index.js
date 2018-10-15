@@ -1,7 +1,7 @@
 /* eslint-disable  func-names */
 /* eslint-disable  no-console */
 
-const Alexa = require('ask-sdk-core');
+const Alexa = require('ask-sdk');
 const { Player, syncDb } = require('./shipshape');
 
 const LaunchRequestHandler = {
@@ -113,7 +113,7 @@ const ErrorHandler = {
   },
 };
 
-const skillBuilder = Alexa.SkillBuilders.custom();
+const skillBuilder = Alexa.SkillBuilders.standard();
 
 exports.handler = skillBuilder
   .addRequestHandlers(

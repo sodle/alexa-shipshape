@@ -13,5 +13,8 @@
     "pg": "^7.5.0",
     "pg-hstore": "^2.3.2",
     "sequelize": "^4.39.0"
+  },
+  "devDependencies": {
+    "bespoken-tools": "^2.0.32"
   }
 }
